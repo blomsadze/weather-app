@@ -14,7 +14,7 @@ export const useDefaultWeatherRequest = ({ lat, lon }: Props) => {
     ['default-weather'],
     () =>
       apiRequest({
-        params: `lat=${lat}&lon=${lon}`
+        params: `lat=${lat}&lon=${lon}&units=metric`
       }),
     {
       enabled: !!lat && !!lon
