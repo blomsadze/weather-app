@@ -12,7 +12,7 @@ const LayoutWrapper = ({ children }: Props) => {
   return (
     <>
       <Header />
-      <main className="mt-20">{children}</main>
+      <main className="md:mt-20 pb-10 mt-5">{children}</main>
     </>
   );
 };

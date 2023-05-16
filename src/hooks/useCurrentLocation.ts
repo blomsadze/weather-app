@@ -1,17 +1,14 @@
-import { useGeolocated } from 'react-geolocated';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
 
 export const useCurrentLocation = () => {
-  const { coords, isGeolocationEnabled } = useGeolocated({
-    positionOptions: {
-      enableHighAccuracy: false
-    },
-    userDecisionTimeout: 5000,
-    watchLocationPermissionChange: true
+  const { data: locationData } = useQuery(['location'], () => {
+    return axios.get('https://ipapi.co/json/');
   });
 
+  console.log('locationData', locationData);
+
   return {
-    longitude: coords?.longitude,
-    latitude: coords?.latitude,
-    isGeolocationEnabled
+    locationData
   };
 };

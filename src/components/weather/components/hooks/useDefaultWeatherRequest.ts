@@ -3,26 +3,34 @@ import { useQuery } from '@tanstack/react-query';
 
 // utils
 import apiRequest from '../../../../utils/apiRequest';
+import { toast } from 'react-toastify';
 
 type Props = {
-  lat: number | undefined;
-  lon: number | undefined;
+  city?: string;
 };
 
-export const useDefaultWeatherRequest = ({ lat, lon }: Props) => {
-  const { data: weatherData, isLoading } = useQuery(
-    ['default-weather'],
+export const useWeatherRequest = ({ city }: Props) => {
+  const {
+    data: weatherData,
+    isLoading,
+    isSuccess
+  } = useQuery(
+    [city],
     () =>
       apiRequest({
-        params: `lat=${lat}&lon=${lon}&units=metric`
+        params: `q=${city}&units=metric`
       }),
     {
-      enabled: !!lat && !!lon
+      enabled: !!city,
+      onError: (error: any) => {
+        toast.error(error.response?.data?.message);
+      }
     }
   );
 
   return {
     weatherInfo: weatherData?.data || {},
-    isLoading
+    isLoading,
+    isSuccess
   };
 };

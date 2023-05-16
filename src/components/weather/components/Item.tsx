@@ -11,8 +11,9 @@ type FooterItemProps = {
 
 const FooterItem: FC<FooterItemProps> = ({ item }) => {
   const Icon = item.icon;
+
   return (
-    <div className="flex justify-between items-center">
+    <div className="flex mb-2 md:mb-0 justify-between items-center">
       <Icon className="mr-2" />
       <span>{`${item.title} ${item.value} ${item.unit}`}</span>
     </div>

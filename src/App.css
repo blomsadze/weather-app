@@ -14,5 +14,9 @@ body {
   font-size: 16px;
   color: white;
   background: linear-gradient(0deg, #8bdff8, #7878F5), #6531BD;
-  
+}
+
+.max-width{
+  max-width: 1440px;
+  width: 90%;
 }

@@ -29,10 +29,10 @@ const WeatherDetails: FC<WeatherDetailsProps> = ({ data }) => {
         unit: 'Km'
       },
       {
-        title: 'Humidity',
+        title: 'Sea Level',
         icon: HumidityIcon,
-        value: data?.main?.humidity || 0,
-        unit: '%'
+        value: data?.main?.pressure || 0,
+        unit: 'M'
       }
     ],
     right: [
@@ -52,44 +52,39 @@ const WeatherDetails: FC<WeatherDetailsProps> = ({ data }) => {
   };
 
   return (
-    <div className="flex justify-center items-center">
-      <div className="bg-black w-1/3 p-10 bg-opacity-20 rounded-[48px]">
-        <div className="flex flex-col items-center">
-          <h1 className="text-2xl font-semibold">City: {data?.name}</h1>
-          <p>{dayjs().format('DD-MM-YYYY')}</p>
-        </div>
-        <div className="mb-5">
-          <p className="text-[9rem] leading-[9.375rem]">
-            {(data?.main?.temp && data?.main?.temp.toFixed(0)) || 0}
-            <sup
-              style={{
-                verticalAlign: 'super'
-              }}
-              className="text-5xl font-light opacity-85"
-            >
-              °C
-            </sup>
-          </p>
-
-          <span>Weather Condition: {data?.weather?.[0]?.description}</span>
-        </div>
-
-        <div className="flex flex-row justify-between">
-          <div className="flex flex-col items-start">
-            {footerData.left.map((item, index) => (
-              <FooterItem key={index} item={item} />
-            ))}
-          </div>
-          <div className="flex flex-col items-start">
-            {footerData.right.map((item, index) => (
-              <FooterItem key={index} item={item} />
-            ))}
-          </div>
-        </div>
-
-        {/* <h1>Sea Level: {data?.main?.pressure}</h1> */}
+    <>
+      <div className="flex flex-col items-center">
+        <h1 className="text-2xl font-semibold">City: {data?.name}</h1>
+        <p>{dayjs().format('DD-MM-YYYY')}</p>
       </div>
-    </div>
+      <div className="mb-5">
+        <p className="md:text-max text-6xl md:leading-[9.375rem]">
+          {(data?.main?.temp && data?.main?.temp.toFixed(0)) || 0}
+          <sup
+            style={{
+              verticalAlign: 'super'
+            }}
+            className="md:text-5xl text-base font-light opacity-85"
+          >
+            °C
+          </sup>
+        </p>
+        <p>Weather Condition: {data?.weather?.[0]?.description}</p>
+        <p>Humidity: {data?.main?.humidity} %</p>
+      </div>
+      <div className="flex sm:flex-row sm:justify-between justify-center items-start flex-col">
+        <div className="flex flex-col items-start">
+          {footerData.left.map((item, index) => (
+            <FooterItem key={index} item={item} />
+          ))}
+        </div>
+        <div className="flex flex-col items-start">
+          {footerData.right.map((item, index) => (
+            <FooterItem key={index} item={item} />
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 
