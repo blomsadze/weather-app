@@ -8,15 +8,15 @@ import { useDefaultWeatherRequest } from './components/hooks/useDefaultWeatherRe
 const Weather = () => {
   const { longitude, latitude, isGeolocationEnabled } = useCurrentLocation();
 
-  const { weatherInfo, isLoading } = useDefaultWeatherRequest({
+  const { weatherInfo } = useDefaultWeatherRequest({
     lat: latitude,
     lon: longitude
   });
 
-  console.log('weatherInfo', weatherInfo);
-
   return (
-    <>{weatherInfo && !isLoading && <WeatherDetails data={weatherInfo} />}</>
+    <>
+      <WeatherDetails data={weatherInfo} />
+    </>
   );
 };
 
