@@ -1,3 +1,4 @@
+// types
 import { FC } from 'react';
 
 type FooterItemProps = {

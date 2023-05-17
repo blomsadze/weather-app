@@ -4,6 +4,7 @@ import { FooterDataTypes } from './types';
 
 // components
 import FooterItem from './Item';
+
 // utils
 import dayjs from 'dayjs';
 

@@ -1,5 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 // hooks
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 // components
 import WeatherDetails from './components/Details';
@@ -11,34 +12,38 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const Weather = () => {
-  const [location, setLocation] = useState('');
-  const [weatherData, setWeatherData] = useState(null);
+  const [location, setLocation] = useState<string>('');
+  const [weatherData, setWeatherData] = useState({});
 
-  const getWeatherData = async (location: string) => {
+  const getWeatherData = useCallback(async (city: string) => {
     try {
       await axios
         .get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${process.env.REACT_APP_API_KEY}&units=metric`
+          `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=337fa9caefb6f838be27f7659a0ba7f9&units=metric`
         )
         .then((response: any) => {
           setWeatherData(response?.data);
         })
         .catch(() => {
           toast.error('Invalid location');
-          setWeatherData(null);
+          setWeatherData({});
         });
     } catch (error) {
       toast.error('Invalid location');
     }
-  };
+  }, []);
 
   useEffect(() => {
     const getCurrentLocation = async () => {
-      await axios.get('https://ipapi.co/json/').then((response: any) => {
-        const city = response.data.city;
-        setLocation(city);
-        getWeatherData(city);
-      });
+      try {
+        await axios.get('https://ipapi.co/json/').then((response) => {
+          const { city } = response.data;
+          setLocation(city);
+          getWeatherData(city);
+        });
+      } catch (error) {
+        toast.error('Eror getting current location');
+      }
     };
     getCurrentLocation();
   }, []);
@@ -55,7 +60,7 @@ const Weather = () => {
   return (
     <>
       <div className="flex justify-center items-center">
-        <div className="bg-black max-width w-1/3 p-10 bg-opacity-20 rounded-[48px]">
+        <div className="bg-black max-width  lg:w-1/2 w-full p-10 bg-opacity-20 rounded-[48px]">
           <form
             className="mb-4 flex justify-start md:flex-row flex-col items-center"
             onSubmit={handleSubmit}
@@ -70,7 +75,7 @@ const Weather = () => {
               />
             </label>
             <button
-              className="bg-[#6531BD] p-2 mt-4 md:mt-0 rounded-full"
+              className="bg-[#6531BD] py-2 px-4 mt-4 md:mt-0 rounded-full"
               type="submit"
             >
               Get Weather
